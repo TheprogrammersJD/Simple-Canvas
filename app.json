@@ -1,0 +1,21 @@
+
+  "name": "Canvas",
+  "description": "A Mobile canvas",
+  "website": "https://github.com/TheprogrammersJD/Simple-Canvas",
+  "repository": "https://github.com/TheprogrammersJD/Simple-Canvas",
+  "success_url": "/",
+  "keywords": [
+    "node",
+    "express",
+    "socket.io",
+    "realtime",
+    "websocket"
+  ],
+  "scripts": {
+  },
+  "addons": [
+  ],
+  "env": {
+    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-nodejs"
+  }
+}
