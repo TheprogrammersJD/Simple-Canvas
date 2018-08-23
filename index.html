@@ -10429,13 +10429,29 @@ else{
 }
 
 function setup(){
-	createCanvas(widthorheight, widthorheight);
+	createCanvas(window.innerWidth*0.95, window.innerHeight*0.95);
 	background(255, 255, 255);
 	stroke(0, 0, 0);
 }
 
+var can = [];//canvas
+var zoom = 1;
+var zx1;
+var zy1;
+var zx2;
+var zy2;
+var zx3;
+var zy3;
+var zx4;
+var zy4;
+var zoomonce = 0;
+
 function draw(){
-	
+	background(255, 255, 255);
+	translate(-width/2*zoom, -height/2*zoom);
+	for(var c = 0; c < can.length - 3; c+=2){
+		line(can[c], can[c+1], can[c+2], can[c+3]);
+	}
 }
 function random(min, max){
 	numtoreturn = max - min;
@@ -10452,16 +10468,34 @@ function touchStarted(){
 }
 function touchMoved(){
 	if(touches.length == 1){
-		line(mouseX, mouseY, pmouseX, pmouseY);
+		//line(mouseX, mouseY, pmouseX, pmouseY);
+		can.push(mouseX+(width/2*zoom));
+		can.push(mouseY+(height/2*zoom));
+		zoomonce = 0;
 	}
 	else{
+		if(zoomonce == 0){
+			zoomonce = 1;
+			zx1 = touches[0].x;
+			zy1 = touches[0].y;
+			zx2 = touches[1].x;
+			zy2 = touches[1].y;
+		}
+		else{
+			zx3 = touches[0].x;
+			zy3 = touches[0].y;
+			zx4 = touches[1].x;
+			zy4 = touches[1].y;
+		}
+		zoom = Math.sqrt(Math.pow((zx3 + zx4), 2) + Math.pow((zy3 + zy4), 2))/Math.sqrt(Math.pow((zx1 + zx2), 2) + Math.pow((zy1 + zy2), 2));
 		for(var t = 0; t < touches.length; t++){
 			ellipse(touches[t].x, touches[t].y, 10, 10);
 		}
 	}
 }
 function mouseDragged(){
-	line(mouseX, mouseY, pmouseX, pmouseY);
+	can.push(mouseX+(width/2*zoom));
+	can.push(mouseY+(height/2*zoom));
 }
 function playsound(path){
 	$("body").append("<audio src = '"+path+"' autoplay = 'true'></audio>");
